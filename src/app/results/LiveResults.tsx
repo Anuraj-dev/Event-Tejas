@@ -116,6 +116,7 @@ export default function LiveResults({
                 fill
                 className="object-contain p-1"
                 sizes="56px"
+                priority={i < 3}
               />
             </div>
 
