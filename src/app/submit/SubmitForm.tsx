@@ -180,7 +180,7 @@ export default function SubmitForm({
           ) : (
             <div className="p-6 space-y-5">
               <div className="relative h-56 rounded-lg overflow-hidden bg-card-hover">
-                <Image src={preview} alt="Logo preview" fill className="object-contain p-4" />
+                <Image src={preview} alt="Logo preview" fill className="object-contain p-4" sizes="(max-width: 768px) 100vw, 672px" />
               </div>
               <div className="flex gap-3">
                 <button

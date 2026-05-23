@@ -1,10 +1,9 @@
-import { createClient } from '@/lib/supabase/server'
+import { getUser } from '@/lib/supabase/cached'
 import { redirect } from 'next/navigation'
 import LoginButton from './LoginButton'
 
 export default async function LoginPage() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getUser()
   if (user) redirect('/submit')
 
   return (

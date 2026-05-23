@@ -1,11 +1,10 @@
-import { createClient } from '@/lib/supabase/server'
+import { getUser } from '@/lib/supabase/cached'
 import { signOut } from '@/lib/actions'
 import Link from 'next/link'
 import Image from 'next/image'
 
 export default async function Nav() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getUser()
   if (!user) return null
 
   const name = (user.user_metadata?.full_name as string | undefined) ?? user.email ?? 'Member'

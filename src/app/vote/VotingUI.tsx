@@ -92,7 +92,7 @@ export default function VotingUI({ logos, existingVotes }: { logos: Logo[], exis
                     aria-label={`Remove ${m.label} pick`}
                     className="w-full aspect-square relative cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                   >
-                    <Image src={pick.logo.image_url} alt={`${m.label} ranked logo`} fill className="object-contain p-3" />
+                    <Image src={pick.logo.image_url} alt={`${m.label} ranked logo`} fill className="object-contain p-3" sizes="(max-width: 768px) 33vw, 340px" />
                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 flex items-center justify-center transition-opacity">
                       <span className="text-white text-xs font-bold font-display tracking-widest">REMOVE</span>
                     </div>

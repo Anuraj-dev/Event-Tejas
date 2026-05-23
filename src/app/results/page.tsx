@@ -1,13 +1,14 @@
 import { createClient } from '@/lib/supabase/server'
+import { getUser } from '@/lib/supabase/cached'
 import { redirect } from 'next/navigation'
-import Nav from '@/components/Nav'
 import LiveResults from './LiveResults'
 import type { Logo, Settings, ScoredEntry } from '@/lib/types'
 
 export default async function ResultsPage() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getUser()
   if (!user) redirect('/login')
+
+  const supabase = await createClient()
 
   const [{ data: settings }, { data: logos }, { data: votes }, { data: profiles }] =
     await Promise.all([
@@ -52,32 +53,29 @@ export default async function ResultsPage() {
   const maxScore = Math.max(...scored.map(s => s.score), 1)
 
   return (
-    <>
-      <Nav />
-      <main className="min-h-screen pt-20 pb-16 px-4">
-        <div className="max-w-3xl mx-auto">
-          <div className="mb-10 flex items-end justify-between">
-            <div>
-              <p className="text-secondary text-xs font-bold tracking-[0.3em] uppercase mb-3 font-display">
-                Competition
-              </p>
-              <h1 className="text-[3.5rem] leading-none font-[800] text-text font-display">LIVE</h1>
-              <h1 className="text-[3.5rem] leading-none font-[800] text-primary font-display">RESULTS</h1>
-            </div>
-            <div className="flex items-center gap-2 mb-2" aria-label="Live updating">
-              <span className="w-2 h-2 rounded-full bg-cta pulse-dot" aria-hidden />
-              <span className="text-cta text-sm font-medium tracking-widest font-display">LIVE</span>
-            </div>
+    <main className="min-h-screen pt-20 pb-16 px-4">
+      <div className="max-w-3xl mx-auto">
+        <div className="mb-10 flex items-end justify-between">
+          <div>
+            <p className="text-secondary text-xs font-bold tracking-[0.3em] uppercase mb-3 font-display">
+              Competition
+            </p>
+            <h1 className="text-[3.5rem] leading-none font-[800] text-text font-display">LIVE</h1>
+            <h1 className="text-[3.5rem] leading-none font-[800] text-primary font-display">RESULTS</h1>
           </div>
-
-          <LiveResults
-            initialScored={scored}
-            initialMaxScore={maxScore}
-            revealAuthors={s?.reveal_authors ?? false}
-            allLogos={logosWithProfiles}
-          />
+          <div className="flex items-center gap-2 mb-2" aria-label="Live updating">
+            <span className="w-2 h-2 rounded-full bg-cta pulse-dot" aria-hidden />
+            <span className="text-cta text-sm font-medium tracking-widest font-display">LIVE</span>
+          </div>
         </div>
-      </main>
-    </>
+
+        <LiveResults
+          initialScored={scored}
+          initialMaxScore={maxScore}
+          revealAuthors={s?.reveal_authors ?? false}
+          allLogos={logosWithProfiles}
+        />
+      </div>
+    </main>
   )
 }
