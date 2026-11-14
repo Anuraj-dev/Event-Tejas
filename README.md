@@ -114,3 +114,7 @@ supabase/schema.sql      Tables, RLS policies, profile trigger, storage bucket
 - **Submissions and deletes stay open after voting closes.** `voting_open` blocks only `castVotes`.
 - **The two-logo limit is enforced in the form only.** The database does not count submissions per member.
 - **Logo files are public.** The `logos` bucket is public, so anyone with a file's URL can open it.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
